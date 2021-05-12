@@ -32,11 +32,12 @@ class Create extends \Magento\Backend\App\Action
     public function execute()
     {
         $this->_logger->debug('Creating Products!!');
-        // do whatever you want to do
 
         $products_import = file_get_contents("http://localhost/magento/json_data/products_import.json");
         $json_data = json_decode($products_import, true);
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $fileSystem = $objectManager->create('\Magento\Framework\Filesystem');
+        $mediaPath = $fileSystem->getDirectoryRead(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA)->getAbsolutePath();
 
         foreach ($json_data as $products => $product) {
 
@@ -66,6 +67,13 @@ class Create extends \Magento\Backend\App\Action
                                             'qty' => $product[$id]['qty']
                                         )
                                     );
+
+                $imgurl = $product[$id]['image']; 
+                $imagename= basename($imgurl);
+                $image = $this->getimg($imgurl); 
+                file_put_contents($mediaPath.'catalog/product/'.$imagename,$image); 
+
+                $create_product->addImageToMediaGallery($mediaPath.'catalog/product/'.$imagename, array('image', 'small_image', 'thumbnail'), false, false);
                
                 $create_product->save();
 
@@ -76,4 +84,24 @@ class Create extends \Magento\Backend\App\Action
  
         
     }
+
+
+   public function getimg($url) 
+   {         
+    $headers[] = 'Accept: image/gif, image/x-bitmap, image/jpeg, image/pjpeg';              
+    $headers[] = 'Connection: Keep-Alive';         
+    $headers[] = 'Content-type: application/x-www-form-urlencoded;charset=UTF-8';         
+    $user_agent = 'php';         
+    $process = curl_init($url);         
+    curl_setopt($process, CURLOPT_HTTPHEADER, $headers);         
+    curl_setopt($process, CURLOPT_HEADER, 0);         
+    curl_setopt($process, CURLOPT_USERAGENT, $user_agent); //check here         
+    curl_setopt($process, CURLOPT_TIMEOUT, 30);         
+    curl_setopt($process, CURLOPT_RETURNTRANSFER, 1);         
+    curl_setopt($process, CURLOPT_FOLLOWLOCATION, 1);         
+    $return = curl_exec($process);         
+    curl_close($process);         
+    return $return;     
+   } 
+
 }
