@@ -1,9 +1,5 @@
 <?php
-/**
- *
- * Copyright © 2016 Magento. All rights reserved.
- * See COPYING.txt for license details.
- */
+
 namespace Strativ\DynamicProduct\Controller\Adminhtml\System\Config;
 
 use \Magento\Catalog\Model\Product\Visibility;
@@ -77,7 +73,7 @@ class Create extends \Magento\Backend\App\Action
             
         }
 
-        $this->_logger->debug('Product created!!');
+ 
         
     }
 }
