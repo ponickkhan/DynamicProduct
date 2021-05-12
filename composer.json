@@ -1,0 +1,22 @@
+{
+    "name": "strativ/module-dynamicproduct",
+    "description": "Magento 2 Recruitment Test Module For Strativ",
+    "type": "magento2-module",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Md.Rafiuzzman Khan",
+            "email": "ponickid@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Strativ\\DynamicProduct\\": ""
+        }
+    }
+}
