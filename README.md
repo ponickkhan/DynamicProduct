@@ -14,7 +14,7 @@ Magento 2 Recruitment Test Module For Strativ
 
 ### Configuration
 
- - Set products_import.json file url in DynamicProduct/Controller/Adminhtml/System/Config/Create.php on line 41
+ - Set products_import.json file url in DynamicProduct/Controller/Adminhtml/System/Config/Create.php on line 36
  - Set products_update.json file url in DynamicProduct/Controller/Adminhtml/System/Config/Update.php on line 41
 
 
