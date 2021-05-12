@@ -25,7 +25,7 @@ class Update extends \Magento\Backend\App\Action
 
 
     /**
-     * Create
+     * Update
      *
      * @return void
      */

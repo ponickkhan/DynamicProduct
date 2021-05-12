@@ -36,12 +36,18 @@ class Create extends \Magento\Backend\App\Action
         $products_import = file_get_contents("http://localhost/magento/json_data/products_import.json");
         $json_data = json_decode($products_import, true);
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $productObj = $objectManager->get('Magento\Catalog\Model\Product');
         $fileSystem = $objectManager->create('\Magento\Framework\Filesystem');
         $mediaPath = $fileSystem->getDirectoryRead(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA)->getAbsolutePath();
 
-        foreach ($json_data as $products => $product) {
+        foreach ($json_data as $products => $product) 
+        {
 
-            foreach ($product as $id => $value) {
+            foreach ($product as $id => $value) 
+            {
+
+              if(!$productObj->getIdBySku($product[$id]['sku'])) 
+              {
                 
                 $create_product = $objectManager->create('\Magento\Catalog\Model\Product');
                 $create_product->setSku($product[$id]['sku']); 
@@ -76,6 +82,8 @@ class Create extends \Magento\Backend\App\Action
                 $create_product->addImageToMediaGallery($mediaPath.'catalog/product/'.$imagename, array('image', 'small_image', 'thumbnail'), false, false);
                
                 $create_product->save();
+
+              }
 
             }
             
